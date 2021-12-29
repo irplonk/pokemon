@@ -20,7 +20,7 @@ class PokemonListViewModel @Inject constructor(pokemonRepository: PokemonReposit
                         state.onNext(PokemonListState.FetchedPokemonListState(it.results))
                     },
                     {
-                        state.onNext(PokemonListState.ErrorState)
+                        state.onNext(PokemonListState.ErrorState(it.message ?: "Oops something went wrong"))
                     }
                 )
         )

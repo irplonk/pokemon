@@ -8,5 +8,5 @@ sealed class PokemonListState : BaseState {
         PokemonListState()
 
     object LoadingState : PokemonListState()
-    object ErrorState : PokemonListState()
+    data class ErrorState(val message: String) : PokemonListState()
 }
