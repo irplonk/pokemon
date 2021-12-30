@@ -1,9 +1,7 @@
 package com.example.pokemon.main.pokemonList
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
@@ -19,6 +17,7 @@ import com.example.pokemon.ui.LoadingView
 
 @Composable
 fun PokemonListScreen(
+    navigateToPokemonDetails: (pokemonName: String) -> Unit,
     pokemonListViewModel: PokemonListViewModel = viewModel()
 ) {
     val state: PokemonListState
@@ -26,18 +25,24 @@ fun PokemonListScreen(
     when (state) {
         PokemonListState.LoadingState -> LoadingView()
         is PokemonListState.ErrorState -> ErrorMessage(message = (state as PokemonListState.ErrorState).message)
-        is PokemonListState.FetchedPokemonListState -> PokemonList((state as PokemonListState.FetchedPokemonListState).pokemonListEntries)
+        is PokemonListState.FetchedPokemonListState -> PokemonList(
+            (state as PokemonListState.FetchedPokemonListState).pokemonListEntries,
+            navigateToPokemonDetails
+        )
     }
 }
 
 @Composable
-fun PokemonList(pokemonList: List<PokemonListEntry>) {
+fun PokemonList(
+    pokemonList: List<PokemonListEntry>,
+    navigateToPokemonDetails: (pokemonName: String) -> Unit
+) {
     LazyColumn(contentPadding = PaddingValues(vertical = 8.dp)) {
         items(
             items = pokemonList,
             itemContent = {
-                PokemonListItem(pokemon = it) {
-
+                PokemonListItem(pokemon = it) { pokemonName ->
+                    navigateToPokemonDetails(pokemonName)
                 }
             }
         )

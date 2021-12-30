@@ -9,10 +9,6 @@ import javax.inject.Inject
 class PokemonDetailsViewModel @Inject constructor(private val pokemonRepository: PokemonRepository) :
     BaseViewModel<PokemonDetailsIntent, PokemonDetailsAction, PokemonDetailsState>() {
 
-    init {
-        state.onNext(PokemonDetailsState.LoadingState)
-    }
-
     override fun convertIntentToAction(intent: PokemonDetailsIntent): PokemonDetailsAction {
         return when (intent) {
             is PokemonDetailsIntent.InitialIntent ->
@@ -28,7 +24,7 @@ class PokemonDetailsViewModel @Inject constructor(private val pokemonRepository:
 
     private fun fetchPokemonDetails(name: String?) {
         if (name.isNullOrEmpty()) {
-            state.onNext(PokemonDetailsState.ErrorState)
+            state.onNext(PokemonDetailsState.ErrorState("Invalid pokemon name passed"))
             return
         }
         disposable.add(
@@ -40,7 +36,11 @@ class PokemonDetailsViewModel @Inject constructor(private val pokemonRepository:
                         state.onNext(PokemonDetailsState.FetchedPokemonDetailsState(it))
                     },
                     {
-                        state.onNext(PokemonDetailsState.ErrorState)
+                        state.onNext(
+                            PokemonDetailsState.ErrorState(
+                                it.message ?: "Oops something went wrong"
+                            )
+                        )
                     }
                 )
         )

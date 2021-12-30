@@ -10,7 +10,6 @@ class PokemonListViewModel @Inject constructor(pokemonRepository: PokemonReposit
     BaseViewModel<PokemonListIntent, PokemonListAction, PokemonListState>() {
 
     init {
-        state.onNext(PokemonListState.LoadingState)
         disposable.add(
             pokemonRepository.getPokemon()
                 .observeOn(schedulerProvider.ui())
