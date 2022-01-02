@@ -24,9 +24,10 @@ class PokemonDetailsViewModel @Inject constructor(private val pokemonRepository:
 
     private fun fetchPokemonDetails(name: String?) {
         if (name.isNullOrEmpty()) {
-            state.onNext(PokemonDetailsState.ErrorState("Invalid pokemon name passed"))
+            state.onNext(PokemonDetailsState.ErrorState("Null or empty pokemon name passed"))
             return
         }
+        state.onNext(PokemonDetailsState.LoadingState)
         disposable.add(
             pokemonRepository.getPokemonDetails(name)
                 .observeOn(schedulerProvider.ui())

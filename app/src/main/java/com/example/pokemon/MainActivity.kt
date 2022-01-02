@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.pokemon.main.pokemonDetails.PokemonDetailsScreen
 import com.example.pokemon.main.pokemonDetails.PokemonDetailsViewModel
+import com.example.pokemon.main.pokemonList.PokemonListFragment
 import com.example.pokemon.main.pokemonList.PokemonListScreen
 import com.example.pokemon.main.pokemonList.PokemonListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,8 +20,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            PokemonApp()
+        // Use Composable functions
+//        setContent {
+//            PokemonApp()
+//        }
+        // Use Fragments
+        setContentView(R.layout.main_activity)
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .add(android.R.id.content, PokemonListFragment.newInstance())
+                .commitNow()
         }
     }
 }
