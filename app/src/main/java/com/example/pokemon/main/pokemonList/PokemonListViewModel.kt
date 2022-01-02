@@ -2,11 +2,15 @@ package com.example.pokemon.main.pokemonList
 
 import com.example.pokemon.data.PokemonRepository
 import com.example.pokemon.main.base.BaseViewModel
+import com.example.pokemon.utils.ResourcesProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class PokemonListViewModel @Inject constructor(pokemonRepository: PokemonRepository) :
+class PokemonListViewModel @Inject constructor(
+    pokemonRepository: PokemonRepository,
+    resourcesProvider: ResourcesProvider
+) :
     BaseViewModel<PokemonListIntent, PokemonListAction, PokemonListState>() {
 
     init {
@@ -19,7 +23,11 @@ class PokemonListViewModel @Inject constructor(pokemonRepository: PokemonReposit
                         state.onNext(PokemonListState.FetchedPokemonListState(it.results))
                     },
                     {
-                        state.onNext(PokemonListState.ErrorState(it.message ?: "Oops something went wrong"))
+                        state.onNext(
+                            PokemonListState.ErrorState(
+                                it.message ?: resourcesProvider.genericErrorMessage
+                            )
+                        )
                     }
                 )
         )

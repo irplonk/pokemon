@@ -4,7 +4,7 @@ import com.example.pokemon.data.PokemonDetailsResponse
 import com.example.pokemon.main.base.BaseState
 
 sealed class PokemonDetailsState : BaseState {
-    data class FetchedPokemonDetailsState(val pokemonDetails: PokemonDetailsResponse?) :
+    data class FetchedPokemonDetailsState(val pokemonDetails: PokemonDetailsResponse) :
         PokemonDetailsState()
 
     object LoadingState : PokemonDetailsState()

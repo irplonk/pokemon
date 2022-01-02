@@ -29,13 +29,9 @@ fun PokemonDetailsScreen(
 }
 
 @Composable
-fun PokemonDetails(pokemonDetails: PokemonDetailsResponse?) {
-    if (pokemonDetails == null) {
-        ErrorMessage(message = "No details for this pokemon")
-    } else {
-        Column {
-            Text(text = pokemonDetails.name)
-            Text(text = pokemonDetails.weight)
-        }
+fun PokemonDetails(pokemonDetails: PokemonDetailsResponse) {
+    Column {
+        Text(text = pokemonDetails.name)
+        Text(text = pokemonDetails.weight)
     }
 }

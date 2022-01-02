@@ -2,11 +2,15 @@ package com.example.pokemon.main.pokemonDetails
 
 import com.example.pokemon.data.PokemonRepository
 import com.example.pokemon.main.base.BaseViewModel
+import com.example.pokemon.utils.ResourcesProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class PokemonDetailsViewModel @Inject constructor(private val pokemonRepository: PokemonRepository) :
+class PokemonDetailsViewModel @Inject constructor(
+    private val pokemonRepository: PokemonRepository,
+    private val resourcesProvider: ResourcesProvider
+) :
     BaseViewModel<PokemonDetailsIntent, PokemonDetailsAction, PokemonDetailsState>() {
 
     override fun convertIntentToAction(intent: PokemonDetailsIntent): PokemonDetailsAction {
@@ -33,13 +37,25 @@ class PokemonDetailsViewModel @Inject constructor(private val pokemonRepository:
                 .observeOn(schedulerProvider.ui())
                 .subscribeOn(schedulerProvider.io())
                 .subscribe(
-                    {
-                        state.onNext(PokemonDetailsState.FetchedPokemonDetailsState(it))
+                    { pokemonDetailsResponse ->
+                        if (pokemonDetailsResponse == null) {
+                            state.onNext(
+                                PokemonDetailsState.ErrorState(
+                                    resourcesProvider.genericErrorMessage
+                                )
+                            )
+                        } else {
+                            state.onNext(
+                                PokemonDetailsState.FetchedPokemonDetailsState(
+                                    pokemonDetailsResponse
+                                )
+                            )
+                        }
                     },
                     {
                         state.onNext(
                             PokemonDetailsState.ErrorState(
-                                it.message ?: "Oops something went wrong"
+                                it.message ?: resourcesProvider.genericErrorMessage
                             )
                         )
                     }
