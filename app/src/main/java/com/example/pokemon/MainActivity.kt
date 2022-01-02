@@ -4,11 +4,14 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.pokemon.main.pokemonDetails.PokemonDetailsScreen
+import com.example.pokemon.main.pokemonDetails.PokemonDetailsViewModel
 import com.example.pokemon.main.pokemonList.PokemonListScreen
+import com.example.pokemon.main.pokemonList.PokemonListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,13 +30,16 @@ fun PokemonApp() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.PokemonList.route) {
         composable(Screen.PokemonList.route) {
-            PokemonListScreen({ pokemonName ->
+            val pokemonListViewModel = hiltViewModel<PokemonListViewModel>()
+            PokemonListScreen(pokemonListViewModel) { pokemonName ->
                 navController.navigate("${Screen.PokemonDetails.route}/$pokemonName")
-            })
+            }
         }
-        composable("${Screen.PokemonDetails.route}/${PokemonDetailsArgs.POKEMON_NAME.value}") { navBackStackEntry ->
+        composable("${Screen.PokemonDetails.route}/{${PokemonDetailsArgs.POKEMON_NAME.value}}") { backStackEntry ->
+            val pokemonDetailsViewModel = hiltViewModel<PokemonDetailsViewModel>()
             PokemonDetailsScreen(
-                pokemonName = navBackStackEntry.arguments?.getString(
+                pokemonDetailsViewModel,
+                pokemonName = backStackEntry.arguments?.getString(
                     PokemonDetailsArgs.POKEMON_NAME.value
                 )
             )

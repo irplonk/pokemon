@@ -10,15 +10,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rxjava2.subscribeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pokemon.data.PokemonListEntry
 import com.example.pokemon.ui.ErrorMessage
 import com.example.pokemon.ui.LoadingView
 
 @Composable
 fun PokemonListScreen(
-    navigateToPokemonDetails: (pokemonName: String) -> Unit,
-    pokemonListViewModel: PokemonListViewModel = viewModel()
+    pokemonListViewModel: PokemonListViewModel,
+    navigateToPokemonDetails: (pokemonName: String) -> Unit
 ) {
     val state: PokemonListState
             by pokemonListViewModel.state.subscribeAsState(initial = PokemonListState.LoadingState)

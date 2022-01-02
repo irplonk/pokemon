@@ -3,19 +3,24 @@ package com.example.pokemon.main.pokemonDetails
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rxjava2.subscribeAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pokemon.data.PokemonDetailsResponse
 import com.example.pokemon.ui.ErrorMessage
 import com.example.pokemon.ui.LoadingView
 
+const val INITIAL_INTENT = "initial_intent"
+
 @Composable
 fun PokemonDetailsScreen(
+    pokemonDetailsViewModel: PokemonDetailsViewModel,
     pokemonName: String?,
-    pokemonDetailsViewModel: PokemonDetailsViewModel = viewModel(),
 ) {
     val state by pokemonDetailsViewModel.state.subscribeAsState(initial = PokemonDetailsState.LoadingState)
+    LaunchedEffect(INITIAL_INTENT) {
+        pokemonDetailsViewModel.dispatchIntent(PokemonDetailsIntent.InitialIntent(pokemonName))
+    }
     when (state) {
         PokemonDetailsState.LoadingState -> LoadingView()
         is PokemonDetailsState.ErrorState -> ErrorMessage(message = (state as PokemonDetailsState.ErrorState).message)
