@@ -1,13 +1,10 @@
 package com.example.pokemon.main.base
 
 import androidx.lifecycle.ViewModel
-import com.example.pokemon.utils.BaseSchedulerProvider
-import com.example.pokemon.utils.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 
-abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState>
-    (protected val schedulerProvider: BaseSchedulerProvider = SchedulerProvider()) : ViewModel() {
+abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState> : ViewModel() {
 
     protected val disposable: CompositeDisposable = CompositeDisposable()
     val state: BehaviorSubject<S> = BehaviorSubject.create()

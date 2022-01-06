@@ -2,14 +2,17 @@ package com.example.pokemon.main.pokemonDetails
 
 import com.example.pokemon.data.PokemonRepository
 import com.example.pokemon.main.base.BaseViewModel
+import com.example.pokemon.utils.BaseSchedulerProvider
 import com.example.pokemon.utils.ResourcesProvider
+import com.example.pokemon.utils.SchedulerProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class PokemonDetailsViewModel @Inject constructor(
     private val pokemonRepository: PokemonRepository,
-    private val resourcesProvider: ResourcesProvider
+    private val resourcesProvider: ResourcesProvider,
+    private val schedulerProvider: BaseSchedulerProvider = SchedulerProvider()
 ) :
     BaseViewModel<PokemonDetailsIntent, PokemonDetailsAction, PokemonDetailsState>() {
 
@@ -37,20 +40,10 @@ class PokemonDetailsViewModel @Inject constructor(
                 .observeOn(schedulerProvider.ui())
                 .subscribeOn(schedulerProvider.io())
                 .subscribe(
-                    { pokemonDetailsResponse ->
-                        if (pokemonDetailsResponse == null) {
-                            state.onNext(
-                                PokemonDetailsState.ErrorState(
-                                    resourcesProvider.genericErrorMessage
-                                )
-                            )
-                        } else {
-                            state.onNext(
-                                PokemonDetailsState.FetchedPokemonDetailsState(
-                                    pokemonDetailsResponse
-                                )
-                            )
-                        }
+                    {
+                        state.onNext(
+                            PokemonDetailsState.FetchedPokemonDetailsState(it)
+                        )
                     },
                     {
                         state.onNext(

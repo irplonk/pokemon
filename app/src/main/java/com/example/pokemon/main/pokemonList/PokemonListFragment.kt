@@ -50,7 +50,10 @@ class PokemonListFragment :
             }
             is PokemonListState.ErrorState -> {
                 binding.progressBarLoading.visibility = View.GONE
-                binding.textViewErrorMessage.visibility = View.VISIBLE
+                binding.textViewErrorMessage.apply {
+                    visibility = View.VISIBLE
+                    text = state.message
+                }
             }
         }
     }
