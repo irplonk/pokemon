@@ -19,6 +19,9 @@ class PokemonDetailsFragment :
 
     private val pokemonName by lazy { arguments?.getString(ARG_NAME) }
 
+    override val initialIntent
+        get() = PokemonDetailsIntent.InitialIntent(pokemonName)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,11 +29,6 @@ class PokemonDetailsFragment :
     ): View {
         binding = FragmentPokemonDetailsBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.dispatchIntent(PokemonDetailsIntent.InitialIntent(pokemonName))
     }
 
     override fun render(state: PokemonDetailsState) {

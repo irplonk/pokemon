@@ -22,6 +22,9 @@ class PokemonListFragment :
 
     private var pokemonListAdapter: PokemonListAdapter? = null
 
+    override val initialIntent
+        get() = PokemonListIntent.InitialIntent
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

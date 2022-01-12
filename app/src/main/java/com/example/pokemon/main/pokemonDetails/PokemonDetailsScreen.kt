@@ -17,14 +17,17 @@ fun PokemonDetailsScreen(
     pokemonDetailsViewModel: PokemonDetailsViewModel,
     pokemonName: String?,
 ) {
-    val state by pokemonDetailsViewModel.state.subscribeAsState(initial = PokemonDetailsState.LoadingState)
+    val state by pokemonDetailsViewModel.state.subscribeAsState(
+        initial = PokemonDetailsState.LoadingState
+    )
     LaunchedEffect(INITIAL_INTENT) {
         pokemonDetailsViewModel.dispatchIntent(PokemonDetailsIntent.InitialIntent(pokemonName))
     }
-    when (state) {
+    when (val currentState = state) {
         PokemonDetailsState.LoadingState -> LoadingView()
-        is PokemonDetailsState.ErrorState -> ErrorMessage(message = (state as PokemonDetailsState.ErrorState).message)
-        is PokemonDetailsState.FetchedPokemonDetailsState -> PokemonDetails((state as PokemonDetailsState.FetchedPokemonDetailsState).pokemonDetails)
+        is PokemonDetailsState.ErrorState -> ErrorMessage(message = currentState.message)
+        is PokemonDetailsState.FetchedPokemonDetailsState ->
+            PokemonDetails(currentState.pokemonDetails)
     }
 }
 

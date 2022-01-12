@@ -4,19 +4,29 @@ import com.example.pokemon.data.PokemonRepository
 import com.example.pokemon.main.base.BaseViewModel
 import com.example.pokemon.utils.BaseSchedulerProvider
 import com.example.pokemon.utils.ResourcesProvider
-import com.example.pokemon.utils.SchedulerProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class PokemonListViewModel @Inject constructor(
-    pokemonRepository: PokemonRepository,
-    resourcesProvider: ResourcesProvider,
-    schedulerProvider: BaseSchedulerProvider = SchedulerProvider()
+    private val pokemonRepository: PokemonRepository,
+    private val resourcesProvider: ResourcesProvider,
+    private val schedulerProvider: BaseSchedulerProvider
 ) :
     BaseViewModel<PokemonListIntent, PokemonListAction, PokemonListState>() {
 
-    init {
+    override fun convertIntentToAction(intent: PokemonListIntent) =
+        when (intent) {
+            PokemonListIntent.InitialIntent -> PokemonListAction.FetchPokemonListAction
+        }
+
+    override fun handleAction(action: PokemonListAction) {
+        when (action) {
+            PokemonListAction.FetchPokemonListAction -> fetchPokemonList()
+        }
+    }
+
+    private fun fetchPokemonList() {
         state.onNext(PokemonListState.LoadingState)
         disposable.add(
             pokemonRepository.getPokemon()
@@ -35,13 +45,5 @@ class PokemonListViewModel @Inject constructor(
                     }
                 )
         )
-    }
-
-    override fun convertIntentToAction(intent: PokemonListIntent): PokemonListAction {
-        TODO("Not yet implemented")
-    }
-
-    override fun handleAction(action: PokemonListAction) {
-        TODO("Not yet implemented")
     }
 }

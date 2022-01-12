@@ -12,7 +12,7 @@ import javax.inject.Inject
 class PokemonDetailsViewModel @Inject constructor(
     private val pokemonRepository: PokemonRepository,
     private val resourcesProvider: ResourcesProvider,
-    private val schedulerProvider: BaseSchedulerProvider = SchedulerProvider()
+    private val schedulerProvider: BaseSchedulerProvider
 ) :
     BaseViewModel<PokemonDetailsIntent, PokemonDetailsAction, PokemonDetailsState>() {
 
