@@ -62,7 +62,7 @@ class PokemonListViewModelTests {
     }
 
     @Test
-    fun `Given initialization, When pokemonRepository_getPokemon returns an error with a message, Then emit LoadingState and then ErrorState with provided message`() {
+    fun `Given InitialIntent, When pokemonRepository_getPokemon returns an error with a message, Then emit LoadingState and then ErrorState with provided message`() {
         // Given
         val error = Exception("Test error message")
 

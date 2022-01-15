@@ -1,5 +1,6 @@
-package com.example.pokemon.data
+package com.example.pokemon.di
 
+import com.example.pokemon.data.PokemonApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
