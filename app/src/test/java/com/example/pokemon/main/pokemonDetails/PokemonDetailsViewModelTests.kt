@@ -1,7 +1,7 @@
 package com.example.pokemon.main.pokemonDetails
 
-import com.example.pokemon.data.PokemonDetailsResponse
-import com.example.pokemon.data.PokemonRepository
+import com.example.pokemon.model.PokemonDetails
+import com.example.pokemon.model.PokemonRepository
 import com.example.pokemon.utils.ResourcesProvider
 import com.example.pokemon.utils.TestScheduleProvider
 import com.google.common.truth.Truth
@@ -130,7 +130,7 @@ class PokemonDetailsViewModelTests {
     @Test
     fun `Given InitialIntent with valid name, When dispatchIntent is called and pokemonRepository_getPokemonDetails returns a successful response, Then emit LoadingState and then FetchedPokemonDetailsState`() {
         // Given
-        val response = mock(PokemonDetailsResponse::class.java)
+        val response = mock(PokemonDetails::class.java)
         val intent = PokemonDetailsIntent.InitialIntent(pokemonName)
 
         // When

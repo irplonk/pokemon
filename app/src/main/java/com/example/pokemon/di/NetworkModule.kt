@@ -1,6 +1,6 @@
 package com.example.pokemon.di
 
-import com.example.pokemon.data.PokemonApi
+import com.example.pokemon.network.PokemonApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,8 +1,8 @@
 package com.example.pokemon.di
 
-import com.example.pokemon.data.PokemonApi
-import com.example.pokemon.data.PokemonRepository
-import com.example.pokemon.data.PokemonRepositoryImpl
+import com.example.pokemon.model.PokemonRepository
+import com.example.pokemon.model.PokemonRepositoryImpl
+import com.example.pokemon.network.PokemonApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

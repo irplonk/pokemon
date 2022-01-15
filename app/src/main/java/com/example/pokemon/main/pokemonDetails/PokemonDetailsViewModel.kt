@@ -1,10 +1,9 @@
 package com.example.pokemon.main.pokemonDetails
 
-import com.example.pokemon.data.PokemonRepository
 import com.example.pokemon.main.base.BaseViewModel
+import com.example.pokemon.model.PokemonRepository
 import com.example.pokemon.utils.BaseSchedulerProvider
 import com.example.pokemon.utils.ResourcesProvider
-import com.example.pokemon.utils.SchedulerProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

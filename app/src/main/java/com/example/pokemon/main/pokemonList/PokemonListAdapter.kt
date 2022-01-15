@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemon.R
-import com.example.pokemon.data.PokemonListEntry
+import com.example.pokemon.model.Pokemon
 
-class PokemonListAdapter(private val onClickPokemonListEntry: (PokemonListEntry) -> Unit) :
+class PokemonListAdapter(private val onClickPokemonListEntry: (Pokemon) -> Unit) :
     RecyclerView.Adapter<PokemonListAdapter.PokemonListViewHolder>() {
 
-    private var pokemonListEntries = listOf<PokemonListEntry>()
+    private var pokemonListEntries = listOf<Pokemon>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonListViewHolder {
         val view =
@@ -23,8 +23,8 @@ class PokemonListAdapter(private val onClickPokemonListEntry: (PokemonListEntry)
         holder.bind(pokemonListEntries[position])
     }
 
-    fun setData(pokemonListEntries: List<PokemonListEntry>) {
-        this.pokemonListEntries = pokemonListEntries
+    fun setData(pokemon: List<Pokemon>) {
+        this.pokemonListEntries = pokemon
         notifyDataSetChanged()
     }
 
@@ -34,10 +34,10 @@ class PokemonListAdapter(private val onClickPokemonListEntry: (PokemonListEntry)
 
         private val nameTextView = view.findViewById<TextView>(R.id.textView_pokemonName)
 
-        fun bind(pokemonListEntry: PokemonListEntry) {
-            nameTextView.text = pokemonListEntry.name
+        fun bind(pokemon: Pokemon) {
+            nameTextView.text = pokemon.name
             itemView.setOnClickListener {
-                onClickPokemonListEntry(pokemonListEntry)
+                onClickPokemonListEntry(pokemon)
             }
         }
     }

@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.pokemon.data.PokemonListEntry
 import com.example.pokemon.databinding.FragmentPokemonListBinding
 import com.example.pokemon.ext.viewLifecycle
 import com.example.pokemon.main.base.BaseFragment
 import com.example.pokemon.main.pokemonDetails.PokemonDetailsFragment
+import com.example.pokemon.model.Pokemon
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,7 +46,7 @@ class PokemonListFragment :
         when (state) {
             is PokemonListState.FetchedPokemonListState -> {
                 binding.progressBarLoading.visibility = View.GONE
-                pokemonListAdapter?.setData(state.pokemonListEntries)
+                pokemonListAdapter?.setData(state.pokemon)
             }
             is PokemonListState.LoadingState -> {
                 binding.progressBarLoading.visibility = View.VISIBLE
@@ -61,8 +61,8 @@ class PokemonListFragment :
         }
     }
 
-    private fun onClickPokemonListEntry(pokemonListEntry: PokemonListEntry) {
-        val name = pokemonListEntry.name
+    private fun onClickPokemonListEntry(pokemon: Pokemon) {
+        val name = pokemon.name
         val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
         fragmentTransaction?.addToBackStack(TAG)
         fragmentTransaction?.replace(android.R.id.content, PokemonDetailsFragment.newInstance(name))

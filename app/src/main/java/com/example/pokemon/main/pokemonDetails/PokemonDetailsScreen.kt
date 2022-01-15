@@ -1,12 +1,13 @@
 package com.example.pokemon.main.pokemonDetails
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rxjava2.subscribeAsState
-import com.example.pokemon.data.PokemonDetailsResponse
+import com.example.pokemon.model.PokemonDetails
 import com.example.pokemon.ui.ErrorMessage
 import com.example.pokemon.ui.LoadingView
 
@@ -23,16 +24,17 @@ fun PokemonDetailsScreen(
     LaunchedEffect(INITIAL_INTENT) {
         pokemonDetailsViewModel.dispatchIntent(PokemonDetailsIntent.InitialIntent(pokemonName))
     }
-    when (val currentState = state) {
-        PokemonDetailsState.LoadingState -> LoadingView()
-        is PokemonDetailsState.ErrorState -> ErrorMessage(message = currentState.message)
-        is PokemonDetailsState.FetchedPokemonDetailsState ->
-            PokemonDetails(currentState.pokemonDetails)
+    Crossfade(targetState = state) {
+        when (it) {
+            PokemonDetailsState.LoadingState -> LoadingView()
+            is PokemonDetailsState.ErrorState -> ErrorMessage(message = it.message)
+            is PokemonDetailsState.FetchedPokemonDetailsState -> PokemonDetails(it.pokemonDetails)
+        }
     }
 }
 
 @Composable
-fun PokemonDetails(pokemonDetails: PokemonDetailsResponse) {
+fun PokemonDetails(pokemonDetails: PokemonDetails) {
     Column {
         Text(text = pokemonDetails.name)
         Text(text = pokemonDetails.weight)

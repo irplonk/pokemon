@@ -1,4 +1,4 @@
-package com.example.pokemon.data.utils
+package com.example.pokemon.network
 
 import io.reactivex.Single
 import io.reactivex.SingleSource

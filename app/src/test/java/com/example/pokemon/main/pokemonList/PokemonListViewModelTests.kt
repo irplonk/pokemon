@@ -1,8 +1,8 @@
 package com.example.pokemon.main.pokemonList
 
-import com.example.pokemon.data.PokemonListEntry
-import com.example.pokemon.data.PokemonListResponse
-import com.example.pokemon.data.PokemonRepository
+import com.example.pokemon.model.Pokemon
+import com.example.pokemon.model.PokemonResponse
+import com.example.pokemon.model.PokemonRepository
 import com.example.pokemon.utils.ResourcesProvider
 import com.example.pokemon.utils.TestScheduleProvider
 import com.google.common.truth.Truth
@@ -38,8 +38,8 @@ class PokemonListViewModelTests {
     @Test
     fun `Given InitialIntent, When pokemonRepository_getPokemon returns a successful response, Then emit LoadingState and then FetchedPokemonListState`() {
         // Given
-        val response = mock(PokemonListResponse::class.java)
-        val pokemonListEntries = listOf(mock(PokemonListEntry::class.java))
+        val response = mock(PokemonResponse::class.java)
+        val pokemonListEntries = listOf(mock(Pokemon::class.java))
 
         // When
         `when`(response.results).thenReturn(pokemonListEntries)
@@ -58,7 +58,7 @@ class PokemonListViewModelTests {
         Truth.assertThat(fetchedPokemonListState).isInstanceOf(PokemonListState.FetchedPokemonListState::class.java)
 
         val castedFetchedPokemonListState = fetchedPokemonListState as PokemonListState.FetchedPokemonListState
-        Truth.assertThat(castedFetchedPokemonListState.pokemonListEntries).isEqualTo(pokemonListEntries)
+        Truth.assertThat(castedFetchedPokemonListState.pokemon).isEqualTo(pokemonListEntries)
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.example.pokemon
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -18,13 +19,21 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Use Composable functions
-//        setContent {
-//            PokemonApp()
-//        }
-        // Use Fragments
+        setUpWithJetpackCompose()
+        // setUpWithFragments(savedInstanceState)
+    }
+
+    @ExperimentalFoundationApi
+    private fun setUpWithJetpackCompose() {
+        setContent {
+            PokemonApp()
+        }
+    }
+
+    private fun setUpWithFragments(savedInstanceState: Bundle?) {
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -34,6 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+@ExperimentalFoundationApi
 @Composable
 fun PokemonApp() {
     val navController = rememberNavController()

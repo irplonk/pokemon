@@ -1,7 +1,7 @@
 package com.example.pokemon.main.pokemonList
 
-import com.example.pokemon.data.PokemonRepository
 import com.example.pokemon.main.base.BaseViewModel
+import com.example.pokemon.model.PokemonRepository
 import com.example.pokemon.utils.BaseSchedulerProvider
 import com.example.pokemon.utils.ResourcesProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
